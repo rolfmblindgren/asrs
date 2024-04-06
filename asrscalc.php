@@ -9,7 +9,7 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Address;
 
 
-$forside = '/usr/share/php/ASRS_1-1_Page_2.png';
+$forside = '/usr/share/php/ASRS_1-1_Page_1.png';
 $bakside = '/usr/share/php/ASRS_1-1_Page_3.png';
 $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 
