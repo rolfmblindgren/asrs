@@ -1,11 +1,13 @@
 <?php
 
 require_once '/home/vds/www/vendor/autoload.php';
+require_once '/home/vds/www/vendor/tecnickcom/tcpdf/tcpdf.php';
 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Bridge\Google\Transport\GmailSmtpTransport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Address;
+
 
 
 $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
@@ -68,15 +70,37 @@ foreach ($_POST as $key => $typeArray) {
   }
 }
 
-// Sørg for at ingen annen output er sendt før header
-ob_clean();
+// Anta at du allerede har initialisert og manipulert $image
 
-// Lagre bildet eller send til nettleseren
-header('Content-Type: image/png');
-imagepng($image);
+// Lagre GD-bildet til en midlertidig fil
+$tmpBilde = tempnam(sys_get_temp_dir(), 'gd_img') . '.png';
+imagepng($image, $tmpBilde); // Lagre bildet som PNG
+imagedestroy($image); // Frigjør minne brukt av GD-bildet
 
-// Frigjør minne
-imagedestroy($image);
+// Opprett et nytt PDF-dokument
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+// Sett dokumentinformasjon
+$pdf->SetCreator(PDF_CREATOR);
+$pdf->SetAuthor('Ditt Navn');
+$pdf->SetTitle('Ditt Skjema');
+$pdf->SetSubject('Konvertert GD-bilde til PDF');
+
+// Fjern standard header/footer
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
+
+// Legg til en side
+$pdf->AddPage();
+
+// Legg til GD-bildet fra den midlertidige filen
+$pdf->Image($tmpBilde, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, true);
+
+// Lukk og skriv PDF-dokumentet til filsystemet eller send det direkte til nettleseren
+$pdf->Output('gd_image_to_pdf.pdf', 'I');
+
+// Slett den midlertidige bildfilen
+unlink($tmpBilde);
 
 ?>
 
