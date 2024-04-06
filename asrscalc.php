@@ -54,8 +54,8 @@ foreach ($_POST as $key => $typeArray) {
 
       $yPos += $deltaY; // Gå til neste linje
     }
+    $totalYOffset += $deltaY * count($typeArray);
   }
-  $totalYOffset += $deltaY * count($typeArray);
 }
 
 
