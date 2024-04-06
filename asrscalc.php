@@ -35,25 +35,35 @@ $svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
 
 // Beregner total høyde for hver array for å justere startposisjonen vertikalt
 $totalYOffset = 0;
+$spørsmålTeller = 0;  // Holder styr på antall spørsmål behandlet
+
+// Anta at vi legger til ekstra vertikal plass etter det sjette spørsmålet
+$ekstraLuftEtterSeks = 40;  // Størrelsen på den ekstra plassen
 
 // Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
 foreach ($_POST as $key => $typeArray) {
   if (strpos($key, 'typea') === 0) { // Sjekk om nøkkelen begynner med 'typea'
-    // Beregn start Y-posisjon for denne gruppen
-    $startY = $baseStartY + $totalYOffset;
-
+    
     foreach ($typeArray as $index => $svar) {
-      // Beregn X-posisjon basert på svaralternativet
-      $xPos = $baseStartX + (array_search($svar, $svarAlternativer) * $avstandKolonne);
+      if ($spørsmålTeller === 6) { // Etter det sjette spørsmålet, legg til ekstra luft
+        $totalYOffset += $ekstraLuftEtterSeks;
+      }
+
       // Beregn Y-posisjon for dette svaret i gruppen
-      $yPos = $startY + ($index * $deltaY);
+      $yPos = $baseStartY + $totalYOffset + ($index * $deltaY);
+
+      // Beregn X-posisjon basert på svaralternativet
+      $xPos = $baseStartX + (array_search($svar, $svarAlternativer) * $deltaX);
 
       // Tegn krysset
-      imageline($image, $xPos, $yPos, $xPos + $kryssStørrelse, $yPos + $kryssStørrelse, $kryssfarge);
-      imageline($image, $xPos, $yPos + $kryssStørrelse, $xPos + $kryssStørrelse, $yPos, $kryssfarge);
+      imageline($image, $xPos - $kryssStørrelse, $yPos - $kryssStørrelse, $xPos, $yPos, $kryssfarge);
+      imageline($image, $xPos - $kryssStørrelse, $yPos, $xPos, $yPos - $kryssStørrelse, $kryssfarge);
+
+      // Øk spørsmålTeller med 1
+      $spørsmålTeller++;
     }
 
-    // Oppdater totalYOffset for neste gruppe
+    // Oppdater totalYOffset for neste gruppe spørsmål
     $totalYOffset += $deltaY * count($typeArray);
   }
 }
