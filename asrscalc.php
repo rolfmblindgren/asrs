@@ -25,7 +25,7 @@ $deltaY = 81.5;  // Avstanden vertikalt mellom hvert svarfelt
 $deltaX = 76;
 
 // Avstanden horisontalt mellom hver kolonne basert på skjemaet
-$avstandKolonne = 90;
+$avstandKolonne = 100;
 
 // Størrelse på krysset
 $kryssStørrelse = 10;
