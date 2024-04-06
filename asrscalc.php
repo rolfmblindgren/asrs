@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 require_once '/home/vds/www/vendor/autoload.php';
 
@@ -10,11 +10,6 @@ use Symfony\Component\Mime\Address;
 
 $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 
-// Koordinater hvor krysset skal plasseres
-$x = 100; // X-koordinat
-$y = 100; // Y-koordinat
-$størrelse = 40; // Størrelsen på krysset
-
 // Opprett bilde fra eksisterende PNG-fil
 $image = imagecreatefrompng($skjema);
 
@@ -24,10 +19,11 @@ $kryssfarge = imagecolorallocate($image, 0, 0, 0);
 
 
 // Startposisjoner for svarfeltene
-$startX = 1191; // Start X-posisjon for det første spørsmålet
-$startY = 578; // Start Y-posisjon for det første spørsmålet
+$baseStartX = 1191; // Start X-posisjon for det første spørsmålet
+$baseStartY = 578; // Start Y-posisjon for det første spørsmålet
 $deltaY = 40;  // Avstanden vertikalt mellom hvert svarfelt
-
+$deltaX = 50;
+ 
 // Avstanden horisontalt mellom hver kolonne basert på skjemaet
 $avstandKolonne = 50;
 
