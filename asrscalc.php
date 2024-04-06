@@ -13,7 +13,7 @@ $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 // Koordinater hvor krysset skal plasseres
 $x = 100; // X-koordinat
 $y = 100; // Y-koordinat
-$størrelse = 20; // Størrelsen på krysset
+$størrelse = 40; // Størrelsen på krysset
 
 // Opprett bilde fra eksisterende PNG-fil
 $image = imagecreatefrompng($skjema);
