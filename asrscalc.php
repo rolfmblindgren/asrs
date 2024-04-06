@@ -14,8 +14,11 @@ $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 $image = imagecreatefrompng($skjema);
 
 // Alloker en farge til krysset (her: svart)
-$kryssfarge = imagecolorallocate($image, 0, 0, 0);
+$kryssfarge = imagecolorallocate($image, 64, 224, 208);
 
+// Sett tykkelsen på linjene som skal tegnes
+$linjeTykkelse = 5;
+imagesetthickness($image, $linjeTykkelse);
 
 
 // Startposisjoner for svarfeltene
@@ -25,7 +28,7 @@ $deltaY = 81.5;  // Avstanden vertikalt mellom hvert svarfelt
 $deltaX = 82;
 
 // Størrelse på krysset
-$kryssStørrelse = 10;
+$kryssStørrelse = 20;
 
 // Definer svaralternativene som tilsvarer kolonner i skjemaet
 $svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
