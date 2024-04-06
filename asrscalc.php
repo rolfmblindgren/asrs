@@ -1,4 +1,4 @@
- <?php
+<?php
 
 require_once '/home/vds/www/vendor/autoload.php';
 
@@ -23,7 +23,7 @@ $baseStartX = 1191; // Start X-posisjon for det første spørsmålet
 $baseStartY = 578; // Start Y-posisjon for det første spørsmålet
 $deltaY = 40;  // Avstanden vertikalt mellom hvert svarfelt
 $deltaX = 50;
- 
+
 // Avstanden horisontalt mellom hver kolonne basert på skjemaet
 $avstandKolonne = 50;
 
@@ -58,7 +58,8 @@ foreach ($_POST as $key => $typeArray) {
   }
 }
 
-
+// Sørg for at ingen annen output er sendt før header
+ob_clean();
 
 // Lagre bildet eller send til nettleseren
 header('Content-Type: image/png');
