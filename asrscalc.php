@@ -21,9 +21,41 @@ $image = imagecreatefrompng($skjema);
 // Alloker en farge til krysset (her: svart)
 $kryssfarge = imagecolorallocate($image, 0, 0, 0);
 
-// Tegn krysset
-imageline($image, $x, $y, $x + $størrelse, $y + $størrelse, $kryssfarge);
-imageline($image, $x, $y + $størrelse, $x + $størrelse, $y, $kryssfarge);
+
+
+// Startposisjoner for svarfeltene
+$startX = 100; // Start X-posisjon for det første spørsmålet
+$startY = 100; // Start Y-posisjon for det første spørsmålet
+$deltaY = 40;  // Avstanden vertikalt mellom hvert svarfelt
+
+// Avstanden horisontalt mellom hver kolonne basert på skjemaet
+$avstandKolonne = 50;
+
+// Størrelse på krysset
+$kryssStørrelse = 10;
+
+// Definer svaralternativene som tilsvarer kolonner i skjemaet
+$svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
+
+// Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
+foreach ($_POST as $key => $typeArray) {
+  if (strpos($key, 'typea') === 0) { // Sjekk om nøkkelen begynner med 'typea'
+    $yPos = $startY + (intval(substr($key, 5)) * $deltaY); // Beregn Y-posisjon basert på spørsmålsnummeret
+
+    foreach ($typeArray as $index => $svar) {
+      $xPos = $startX + (array_search($svar, $svarAlternativer) * $avstandKolonne); // Beregn X-posisjon basert på svaralternativet
+
+      // Tegn krysset
+      imageline($image, $xPos, $yPos, $xPos + $kryssStørrelse, $yPos + $kryssStørrelse, $kryssfarge);
+      imageline($image, $xPos, $yPos + $kryssStørrelse, $xPos + $kryssStørrelse, $yPos, $kryssfarge);
+
+      $yPos += $deltaY; // Gå til neste linje
+    }
+  }
+}
+
+
+
 
 // Lagre bildet eller send til nettleseren
 header('Content-Type: image/png');
