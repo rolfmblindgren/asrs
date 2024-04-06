@@ -8,7 +8,7 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Address;
 
 
-$skjema = '/usr/share/php/ASRS_1-1_Page_2';
+$skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 
 // Koordinater hvor krysset skal plasseres
 $x = 100; // X-koordinat
