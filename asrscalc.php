@@ -37,6 +37,8 @@ $kryssStørrelse = 10;
 // Definer svaralternativene som tilsvarer kolonner i skjemaet
 $svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
 
+
+$totalYOffset = 0
 // Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
 foreach ($_POST as $key => $typeArray) {
   if (strpos($key, 'typea') === 0) { // Sjekk om nøkkelen begynner med 'typea'
@@ -52,6 +54,7 @@ foreach ($_POST as $key => $typeArray) {
       $yPos += $deltaY; // Gå til neste linje
     }
   }
+  $totalYOffset += $deltaY * count($typeArray);
 }
 
 
