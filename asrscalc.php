@@ -22,10 +22,10 @@ imagesetthickness($image, $linjeTykkelse);
 
 
 // Startposisjoner for svarfeltene
-$baseStartX = 1195; // Start X-posisjon for det første spørsmålet
+$baseStartX = 1196; // Start X-posisjon for det første spørsmålet
 $baseStartY = 579; // Start Y-posisjon for det første spørsmålet
 $deltaY = 82.5;  // Avstanden vertikalt mellom hvert svarfelt
-$deltaX = 84;
+$deltaX = 83;
 
 // Størrelse på krysset
 $kryssStørrelse = 20;
