@@ -9,7 +9,8 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Address;
 
 
-
+$forside = '/usr/share/php/ASRS_1-1_Page_2.png'
+$bakside = '/usr/share/php/ASRS_1-1_Page_3.png'
 $skjema = '/usr/share/php/ASRS_1-1_Page_2.png';
 
 // Opprett bilde fra eksisterende PNG-fil
@@ -70,37 +71,41 @@ foreach ($_POST as $key => $typeArray) {
   }
 }
 
-// Anta at du allerede har initialisert og manipulert $image
-
-// Lagre GD-bildet til en midlertidig fil
-$tmpBilde = tempnam(sys_get_temp_dir(), 'gd_img') . '.png';
-imagepng($image, $tmpBilde); // Lagre bildet som PNG
-imagedestroy($image); // Frigjør minne brukt av GD-bildet
-
 // Opprett et nytt PDF-dokument
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // Sett dokumentinformasjon
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Ditt Navn');
-$pdf->SetTitle('Ditt Skjema');
-$pdf->SetSubject('Konvertert GD-bilde til PDF');
+$pdf->SetTitle('Skjema PDF');
+$pdf->SetSubject('Skjema med Kryss');
 
 // Fjern standard header/footer
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
 
-// Legg til en side
+// Legg til forside
 $pdf->AddPage();
+$pdf->Image($forside, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, true);
 
-// Legg til GD-bildet fra den midlertidige filen
+// Lagre GD-bildet ($image) til en midlertidig fil
+$tmpBilde = tempnam(sys_get_temp_dir(), 'gd_img') . '.png';
+imagepng($image, $tmpBilde); // Lagre bildet som PNG
+imagedestroy($image); // Frigjør minne
+
+// Legg til skjema (GD-bildet) som side 2
+$pdf->AddPage();
 $pdf->Image($tmpBilde, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, true);
-
-// Lukk og skriv PDF-dokumentet til filsystemet eller send det direkte til nettleseren
-$pdf->Output('gd_image_to_pdf.pdf', 'I');
 
 // Slett den midlertidige bildfilen
 unlink($tmpBilde);
+
+// Legg til bakside
+$pdf->AddPage();
+$pdf->Image($bakside, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, true);
+
+// Lukk og skriv PDF-dokumentet til filsystemet eller send det direkte til nettleseren
+$pdf->Output('fullt_skjema.pdf', 'I');
 
 ?>
 
