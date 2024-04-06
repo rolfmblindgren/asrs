@@ -21,8 +21,8 @@ $kryssfarge = imagecolorallocate($image, 0, 0, 0);
 // Startposisjoner for svarfeltene
 $baseStartX = 1191; // Start X-posisjon for det første spørsmålet
 $baseStartY = 578; // Start Y-posisjon for det første spørsmålet
-$deltaY = 40;  // Avstanden vertikalt mellom hvert svarfelt
-$deltaX = 50;
+$deltaY = 82;  // Avstanden vertikalt mellom hvert svarfelt
+$deltaX = 67;
 
 // Avstanden horisontalt mellom hver kolonne basert på skjemaet
 $avstandKolonne = 50;
