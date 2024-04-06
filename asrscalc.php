@@ -21,11 +21,11 @@ $kryssfarge = imagecolorallocate($image, 0, 0, 0);
 // Startposisjoner for svarfeltene
 $baseStartX = 1191; // Start X-posisjon for det første spørsmålet
 $baseStartY = 578; // Start Y-posisjon for det første spørsmålet
-$deltaY = 82;  // Avstanden vertikalt mellom hvert svarfelt
+$deltaY = 81.5;  // Avstanden vertikalt mellom hvert svarfelt
 $deltaX = 76;
 
 // Avstanden horisontalt mellom hver kolonne basert på skjemaet
-$avstandKolonne = 85;
+$avstandKolonne = 87;
 
 // Størrelse på krysset
 $kryssStørrelse = 10;
