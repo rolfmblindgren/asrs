@@ -38,23 +38,27 @@ $kryssStørrelse = 10;
 $svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
 
 // Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
+// Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
 foreach ($_POST as $key => $typeArray) {
   if (strpos($key, 'typea') === 0) { // Sjekk om nøkkelen begynner med 'typea'
-    $yPos = $startY + (intval(substr($key, 5)) * $deltaY); // Beregn Y-posisjon basert på spørsmålsnummeret
+    // Beregn start Y-posisjon for denne gruppen
+    $startY = $baseStartY + $totalYOffset;
 
     foreach ($typeArray as $index => $svar) {
-      $xPos = $startX + (array_search($svar, $svarAlternativer) * $avstandKolonne); // Beregn X-posisjon basert på svaralternativet
+      // Beregn X-posisjon basert på svaralternativet
+      $xPos = $baseStartX + (array_search($svar, $svarAlternativer) * $avstandKolonne);
+      // Beregn Y-posisjon for dette svaret i gruppen
+      $yPos = $startY + ($index * $deltaY);
 
       // Tegn krysset
       imageline($image, $xPos, $yPos, $xPos + $kryssStørrelse, $yPos + $kryssStørrelse, $kryssfarge);
       imageline($image, $xPos, $yPos + $kryssStørrelse, $xPos + $kryssStørrelse, $yPos, $kryssfarge);
-
-      $yPos += $deltaY; // Gå til neste linje
     }
+
+    // Oppdater totalYOffset for neste gruppe
+    $totalYOffset += $deltaY * count($typeArray);
   }
 }
-
-
 
 
 // Lagre bildet eller send til nettleseren
