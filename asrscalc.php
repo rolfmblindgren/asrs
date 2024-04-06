@@ -37,27 +37,30 @@ $kryssStørrelse = 10;
 // Definer svaralternativene som tilsvarer kolonner i skjemaet
 $svarAlternativer = ['Aldri', 'Sjelden', 'I blant', 'Ofte', 'Svært ofte'];
 
-
+// Beregner total høyde for hver array for å justere startposisjonen vertikalt
 $totalYOffset = 0;
 
 // Gå gjennom hver $_POST-array og tegn et kryss basert på svaret
 foreach ($_POST as $key => $typeArray) {
   if (strpos($key, 'typea') === 0) { // Sjekk om nøkkelen begynner med 'typea'
-    $yPos = $startY + (intval(substr($key, 5)) * $deltaY); // Beregn Y-posisjon basert på spørsmålsnummeret
+    // Beregn start Y-posisjon for denne gruppen
+    $startY = $baseStartY + $totalYOffset;
 
     foreach ($typeArray as $index => $svar) {
-      $xPos = $startX + (array_search($svar, $svarAlternativer) * $avstandKolonne); // Beregn X-posisjon basert på svaralternativet
+      // Beregn X-posisjon basert på svaralternativet
+      $xPos = $baseStartX + (array_search($svar, $svarAlternativer) * $avstandKolonne);
+      // Beregn Y-posisjon for dette svaret i gruppen
+      $yPos = $startY + ($index * $deltaY);
 
       // Tegn krysset
       imageline($image, $xPos, $yPos, $xPos + $kryssStørrelse, $yPos + $kryssStørrelse, $kryssfarge);
       imageline($image, $xPos, $yPos + $kryssStørrelse, $xPos + $kryssStørrelse, $yPos, $kryssfarge);
-
-      $yPos += $deltaY; // Gå til neste linje
     }
+
+    // Oppdater totalYOffset for neste gruppe
     $totalYOffset += $deltaY * count($typeArray);
   }
 }
-
 
 
 
